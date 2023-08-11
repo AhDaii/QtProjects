@@ -14,6 +14,14 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void setText(const QString& string);
+
+private slots:
+    void on_action_N_triggered();
+
+    void on_action_Dock_D_triggered();
+
+    void on_action_open_triggered();
 
 private:
     Ui::MainWindow *ui;
