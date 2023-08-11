@@ -66,7 +66,7 @@
      <string>mac地址：</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="emailedit">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -76,7 +76,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="pwdedit">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -96,7 +96,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="macedit">
     <property name="geometry">
      <rect>
       <x>150</x>
