@@ -13,6 +13,7 @@ public:
     explicit MyEdit(QWidget *parent = nullptr);
 protected:
     void keyPressEvent(QKeyEvent *event) override;
+    bool event(QEvent *pevent) override;
 };
 
 #endif // MYEDIT_H

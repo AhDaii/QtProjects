@@ -16,6 +16,9 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
+protected:
+    bool eventFilter(QObject *object, QEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     Ui::Widget *ui;
