@@ -1,0 +1,9 @@
+# ninja log v5
+0	285	1692277444577180276	MyTreeModel_autogen/timestamp	f2a6be7f490cfcfb
+0	285	1692277444577180276	MyTreeModel_autogen/mocs_compilation.cpp	f2a6be7f490cfcfb
+0	285	1692277444577180276	/Users/hunz1/Documents/QtProjects.nosync/MyTreeModel/cmake-build-debug/MyTreeModel_autogen/timestamp	f2a6be7f490cfcfb
+0	285	1692277444577180276	/Users/hunz1/Documents/QtProjects.nosync/MyTreeModel/cmake-build-debug/MyTreeModel_autogen/mocs_compilation.cpp	f2a6be7f490cfcfb
+285	825	1692277445120024195	CMakeFiles/MyTreeModel.dir/MyTreeModel_autogen/mocs_compilation.cpp.o	5acb63016bfebe8a
+285	834	1692277445130533356	CMakeFiles/MyTreeModel.dir/main.cpp.o	593a7ccd1cf502fd
+285	846	1692277445143111908	CMakeFiles/MyTreeModel.dir/mainwindow.cpp.o	b59e54630ebbe58e
+846	962	1692277445260323368	MyTreeModel.app/Contents/MacOS/MyTreeModel	2eedfe4ecce87668

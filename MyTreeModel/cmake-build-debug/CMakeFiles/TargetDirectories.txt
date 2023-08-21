@@ -1,0 +1,9 @@
+/Users/hunz1/Documents/QtProjects.nosync/MyTreeModel/cmake-build-debug/CMakeFiles/MyTreeModel.dir
+/Users/hunz1/Documents/QtProjects.nosync/MyTreeModel/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/hunz1/Documents/QtProjects.nosync/MyTreeModel/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/hunz1/Documents/QtProjects.nosync/MyTreeModel/cmake-build-debug/CMakeFiles/list_install_components.dir
+/Users/hunz1/Documents/QtProjects.nosync/MyTreeModel/cmake-build-debug/CMakeFiles/install.dir
+/Users/hunz1/Documents/QtProjects.nosync/MyTreeModel/cmake-build-debug/CMakeFiles/install/local.dir
+/Users/hunz1/Documents/QtProjects.nosync/MyTreeModel/cmake-build-debug/CMakeFiles/install/strip.dir
+/Users/hunz1/Documents/QtProjects.nosync/MyTreeModel/cmake-build-debug/CMakeFiles/MyTreeModel_autogen_timestamp_deps.dir
+/Users/hunz1/Documents/QtProjects.nosync/MyTreeModel/cmake-build-debug/CMakeFiles/MyTreeModel_autogen.dir
