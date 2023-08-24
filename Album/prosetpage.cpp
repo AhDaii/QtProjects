@@ -2,6 +2,7 @@
 #include "ui_prosetpage.h"
 #include "QLineEdit"
 #include <QDir>
+#include <QFileDialog>
 
 ProSetPage::ProSetPage(QWidget *parent) :
     QWizardPage(parent),
@@ -25,6 +26,12 @@ ProSetPage::~ProSetPage()
     delete ui;
 }
 
+void ProSetPage::getProSettings(QString &name, QString &path)
+{
+    name = ui->lineEdit->text();
+    path = ui->lineEdit_2->text();
+}
+
 bool ProSetPage::isComplete() const
 {
     if (ui->lineEdit->text().isEmpty() || ui->lineEdit_2->text().isEmpty())
@@ -46,3 +53,26 @@ bool ProSetPage::isComplete() const
     ui->tips->setText("");
     return QWizardPage::isComplete();
 }
+
+void ProSetPage::on_pushButton_clicked()
+{
+    QFileDialog file_dialog;
+    file_dialog.setFileMode(QFileDialog::Directory);
+    file_dialog.setWindowTitle("选择导入的文件夹");
+    auto path = QDir::currentPath();
+    file_dialog.setDirectory(path);
+    file_dialog.setViewMode(QFileDialog::Detail);
+
+    QStringList fileNames;
+    if (file_dialog.exec()) {
+        fileNames = file_dialog.selectedFiles();
+    }
+
+    if (fileNames.length() <= 0) {
+        return ;
+    }
+
+    QString import_path = fileNames.at(0);
+    ui->lineEdit_2->setText(import_path);
+}
+

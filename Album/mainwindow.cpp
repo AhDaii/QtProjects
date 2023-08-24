@@ -3,6 +3,7 @@
 #include <QMenu>
 #include <QAction>
 #include "wizard.h"
+#include "protree.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -30,6 +31,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 连接信号与槽
     connect(action_create_pro, &QAction::triggered, this, &MainWindow::SlotCreatePro);
+
+    _protree = new ProTree();
+    ui->proLayout->addWidget(_protree);
 }
 
 MainWindow::~MainWindow()
@@ -44,10 +48,12 @@ void MainWindow::SlotCreatePro(bool)
     wizard.setWindowTitle(tr("创建项目"));
     auto *page = wizard.page(0);
     page->setTitle(tr("设置项目配置"));
-    // TODO:连接信号与槽, 把项目配置传回
+    // 连接信号与槽, 把项目配置传回
+    connect(&wizard, &Wizard::sigProSettings, dynamic_cast<ProTree*>(_protree), &ProTree::AddProToTree);
 
     wizard.show();
     wizard.exec();
-    // TODO:断开所有信号
+    // 断开所有信号
+    disconnect();
 }
 
