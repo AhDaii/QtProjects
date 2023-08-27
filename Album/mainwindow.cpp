@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(action_create_pro, &QAction::triggered, this, &MainWindow::SlotCreatePro);
 
     _protree = new ProTree();
-    ui->proLayout->addWidget(_protree);
+    ui->proLayout->addWidget(_protree, 0);
 }
 
 MainWindow::~MainWindow()
@@ -43,7 +43,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::SlotCreatePro(bool)
 {
-    qDebug() << "slot create pro triggered!";
+    // qDebug() << "slot create pro triggered!";
     Wizard wizard(this);
     wizard.setWindowTitle(tr("创建项目"));
     auto *page = wizard.page(0);
@@ -54,6 +54,6 @@ void MainWindow::SlotCreatePro(bool)
     wizard.show();
     wizard.exec();
     // 断开所有信号
-    disconnect();
+    disconnect(&wizard);
 }
 

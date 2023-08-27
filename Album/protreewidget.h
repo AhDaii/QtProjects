@@ -4,6 +4,7 @@
 #include <QTreeWidget>
 #include <QSet>
 #include <QAction>
+#include <QProgressDialog>
 
 class ProTreeWidget : public QTreeWidget
 {
@@ -19,6 +20,7 @@ private:
     QAction *_action_setstart;
     QAction *_action_closepro;
     QAction *_action_slideshow;
+    QProgressDialog *_dialog_process;
 
 private slots:
     void slotItemPressed(QTreeWidgetItem *item, int column);

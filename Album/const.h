@@ -7,4 +7,6 @@ enum TreeItemType {
     TreeItemPic = 3, // 项目图片
 };
 
+const int PROCESS_WIDTH = 300;
+
 #endif // CONST_H

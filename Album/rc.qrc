@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>icon/left.png</file>
-        <file>icon/bulm.ico</file>
         <file>icon/close.png</file>
         <file>icon/closeshow_hover.png</file>
         <file>icon/closeshow_press.png</file>
@@ -30,5 +29,6 @@
         <file>icon/show.jpg</file>
         <file>icon/slideshow.png</file>
         <file>style/style.qss</file>
+        <file>icon/bulm.png</file>
     </qresource>
 </RCC>

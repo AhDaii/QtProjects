@@ -58,6 +58,9 @@ void ProSetPage::on_pushButton_clicked()
 {
     QFileDialog file_dialog;
     file_dialog.setFileMode(QFileDialog::Directory);
+#ifdef __APPLE__
+//    file_dialog.setOption(QFileDialog::DontUseNativeDialog);
+#endif
     file_dialog.setWindowTitle("选择导入的文件夹");
     auto path = QDir::currentPath();
     file_dialog.setDirectory(path);

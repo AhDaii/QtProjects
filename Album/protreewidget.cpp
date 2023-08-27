@@ -7,9 +7,12 @@
 #include <QGuiApplication>
 #include <QMenu>
 #include <QTreeWidgetItem>
+#include <QTreeWidget>
+#include <QDebug>
 
-ProTreeWidget::ProTreeWidget(QWidget *parent)
+ProTreeWidget::ProTreeWidget(QWidget *parent): QTreeWidget(parent), _right_btn_item(nullptr)
 {
+    qRegisterMetaType<QVector<int> >("QVector<int>");
     this->header()->hide();
     connect(this, &ProTreeWidget::itemPressed, this, &ProTreeWidget::slotItemPressed);
     _action_import = new QAction(QIcon(":/icon/import.png"), tr("导入文件"), this);
@@ -39,7 +42,8 @@ void ProTreeWidget::addProToTree(const QString &name, const QString &path)
     item->setData(0, Qt::DisplayRole, name);
     item->setData(0, Qt::DecorationRole, QIcon(":/icon/dir.png"));
     item->setData(0, Qt::ToolTipRole, file_path);
-    this->addTopLevelItem(item);
+    qDebug() << "Finish";
+//    this->addTopLevelItem(item);
 }
 
 void ProTreeWidget::slotItemPressed(QTreeWidgetItem *pressedItem, int column)
@@ -56,7 +60,6 @@ void ProTreeWidget::slotItemPressed(QTreeWidgetItem *pressedItem, int column)
             menu.exec(QCursor::pos());
         }
     }
-    qDebug() << "clicked, but nothing happened";
 }
 
 void ProTreeWidget::slotImport()
@@ -70,5 +73,25 @@ void ProTreeWidget::slotImport()
         return ;
     }
 
-//    path = dynamic_cast<ProTreeItem*>(_right_btn_item)->text();
+    path = dynamic_cast<ProTreeItem*>(_right_btn_item)->getPath();
+    file_dialog.setDirectory(path);
+    file_dialog.setViewMode(QFileDialog::Detail);
+
+    QStringList fileName;
+    if (file_dialog.exec()) {
+        fileName = file_dialog.selectedFiles();
+    }
+
+    if (fileName.length() <= 0) {
+        return ;
+    }
+
+    QString import_path = fileName.at(0);
+    int file_count = 0;
+
+    _dialog_process = new QProgressDialog(this);
+    _dialog_process->setWindowTitle(tr("导入中"));
+    _dialog_process->setFixedWidth(PROCESS_WIDTH);
+    _dialog_process->setRange(0, PROCESS_WIDTH);
+    _dialog_process->exec();
 }

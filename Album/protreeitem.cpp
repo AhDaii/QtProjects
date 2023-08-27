@@ -15,32 +15,32 @@ ProTreeItem::ProTreeItem(QTreeWidgetItem *parent, const QString &name, const QSt
 
 const QString &ProTreeItem::getPath()
 {
-    
+    return _path;
 }
 
 QTreeWidgetItem *ProTreeItem::getRoot()
 {
-    
+    return _root;
 }
 
 void ProTreeItem::setPreItem(QTreeWidgetItem *item)
 {
-    
+    _pre_item = item;
 }
 
 void ProTreeItem::setNextItem(QTreeWidgetItem *item)
 {
-    
+    _next_item = item;
 }
 
 ProTreeItem *ProTreeItem::getPreItem()
 {
-    
+    return dynamic_cast<ProTreeItem*>(_pre_item);
 }
 
 ProTreeItem *ProTreeItem::getNextItem()
 {
-    
+    return dynamic_cast<ProTreeItem*>(_next_item);
 }
 
 ProTreeItem *ProTreeItem::getLastPicChild()
