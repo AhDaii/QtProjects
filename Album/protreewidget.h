@@ -1,6 +1,7 @@
 #ifndef PROTREEWIDGET_H
 #define PROTREEWIDGET_H
 
+#include "protreethread.h"
 #include <QTreeWidget>
 #include <QSet>
 #include <QAction>
@@ -21,6 +22,7 @@ private:
     QAction *_action_closepro;
     QAction *_action_slideshow;
     QProgressDialog *_dialog_process;
+    std::shared_ptr<ProTreeThread> _thread_import_pro;
 
 private slots:
     void slotItemPressed(QTreeWidgetItem *item, int column);

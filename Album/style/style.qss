@@ -67,11 +67,14 @@ QTreeView::item:selected {
     background: rgb(38, 95, 153);
 }
 
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings {
+        border-image: none;
+        image: url(:/icon/right.png);
+}
+
 QTreeView::branch:open:has-children:!has-siblings,
-QTreeView::branch:open:has-children:has-siblings
-{image: url(:/icon/down.png);}
-
-
-QTreeView::branch:closed:has-children:!has-siblings,
-QTreeView::branch:closed:has-children:has-siblings
-{image: url(:/icon/right.png);}
+QTreeView::branch:open:has-children:has-siblings  {
+        border-image: none;
+        image: url(:/icon/down.png);
+}

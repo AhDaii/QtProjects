@@ -90,6 +90,10 @@ void ProTreeWidget::slotImport()
     int file_count = 0;
 
     _dialog_process = new QProgressDialog(this);
+
+    _thread_import_pro = std::make_shared<ProTreeThread>(import_path, path, _right_btn_item, file_count, this,
+                                                         _right_btn_item, nullptr);
+    _thread_import_pro->start();
     _dialog_process->setWindowTitle(tr("导入中"));
     _dialog_process->setFixedWidth(PROCESS_WIDTH);
     _dialog_process->setRange(0, PROCESS_WIDTH);
