@@ -21,7 +21,14 @@ ProTreeThread::~ProTreeThread()
 void ProTreeThread::run()
 {
     createProTree(_src_path, _dist_path, _parent_item, _file_count, _self, _root);
-    if (_bstop) return ;
+    if (_bstop) {
+        auto path = dynamic_cast<ProTreeItem*>(_root)->getPath();
+        auto index = _self->indexOfTopLevelItem(_root);
+        delete _self->takeTopLevelItem(index);
+        QDir dir(path);
+        dir.removeRecursively();
+        return ;
+    }
     emit SigFinishProgress(_file_count);
 }
 
@@ -41,7 +48,26 @@ void ProTreeThread::createProTree(const QString &src_path, const QString &dist_p
         QFileInfo fileInfo = list.at(i);
         bool bIsDir = fileInfo.isDir();
         if (bIsDir) {
+            if (_bstop) return ;
+            ++ file_count;
+            emit SigUpdateProgress(file_count);
 
+            QDir dist_dir(dist_path);
+            QString sub_dist_path = dist_dir.absoluteFilePath(fileInfo.fileName());
+            QDir sub_dist_dir(sub_dist_path);
+            if (!sub_dist_dir.exists()) {
+                bool ret = sub_dist_dir.mkdir(sub_dist_path);
+                if (!ret) {
+                    qDebug() << QString("[MKDIR FAILED] %1").arg(sub_dist_path);
+                    continue;
+                }
+                auto *item = new ProTreeItem(parent_item, fileInfo.fileName(), sub_dist_path, root, TreeItemDir);
+                item->setData(0, Qt::DisplayRole, fileInfo.fileName());
+                item->setData(0, Qt::DecorationRole, QIcon(":/icon/dir.png"));
+                item->setData(0, Qt::ToolTipRole, sub_dist_path);
+
+                createProTree(fileInfo.absoluteFilePath(), sub_dist_path, item, file_count, self, root, preItem);
+            }
         } else {
             if (_bstop) return ;
             const QString& suffix = fileInfo.completeSuffix();
@@ -56,7 +82,7 @@ void ProTreeThread::createProTree(const QString &src_path, const QString &dist_p
             QDir dist_dir(dist_path);
             QString dist_file_path = dist_dir.absoluteFilePath(fileInfo.fileName());
             if (!QFile::copy(fileInfo.absoluteFilePath(), dist_file_path)) {
-                qDebug() << QString("[FAILED COPY] %1 -> %2").arg(fileInfo.absoluteFilePath()).arg(dist_path);
+                qDebug() << QString("[COPY FAILED] %1 -> %2").arg(fileInfo.absoluteFilePath()).arg(dist_path);
                 continue;
             }
 
@@ -73,4 +99,9 @@ void ProTreeThread::createProTree(const QString &src_path, const QString &dist_p
         }
     }
 
+}
+
+void ProTreeThread::slotCancelProgress()
+{
+    _bstop = true;
 }

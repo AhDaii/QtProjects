@@ -24,6 +24,9 @@ private:
     QTreeWidget *_self;
     bool _bstop;
 
+public slots:
+    void slotCancelProgress();
+
 signals:
     void SigUpdateProgress(int);
     void SigFinishProgress(int);

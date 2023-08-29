@@ -8,5 +8,6 @@ enum TreeItemType {
 };
 
 const int PROCESS_WIDTH = 300;
+const int PROCESS_MAX = 300;
 
 #endif // CONST_H

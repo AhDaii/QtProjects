@@ -30,5 +30,6 @@
         <file>icon/slideshow.png</file>
         <file>style/style.qss</file>
         <file>icon/bulm.png</file>
+        <file>icon/dir_star.png</file>
     </qresource>
 </RCC>
