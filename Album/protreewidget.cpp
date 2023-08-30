@@ -192,8 +192,7 @@ void ProTreeWidget::slotFinishOpenProgress()
     if (!_dialog_open_progress)
         return ;
     _dialog_open_progress->setValue(PROCESS_MAX);
-    delete _dialog_open_progress;
-    _dialog_open_progress = nullptr;
+    _dialog_open_progress->deleteLater();
 }
 
 void ProTreeWidget::slotCancelOpenProgress()
