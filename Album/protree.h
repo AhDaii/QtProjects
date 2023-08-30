@@ -2,6 +2,7 @@
 #define PROTREE_H
 
 #include <QDialog>
+#include "protreewidget.h"
 
 namespace Ui {
 class ProTree;
@@ -14,6 +15,7 @@ class ProTree : public QDialog
 public:
     explicit ProTree(QWidget *parent = nullptr);
     ~ProTree();
+    ProTreeWidget* getTreeWidget();
 
 private:
     Ui::ProTree *ui;
