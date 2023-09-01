@@ -26,6 +26,8 @@ ProTreeWidget::ProTreeWidget(QWidget *parent):
     connect(_action_import, &QAction::triggered, this, &ProTreeWidget::slotImport);
     connect(_action_setstart, &QAction::triggered, this, &ProTreeWidget::slotSetActive);
     connect(_action_closepro, &QAction::triggered, this, &ProTreeWidget::slotClosePro);
+
+    connect(this, &ProTreeWidget::itemDoubleClicked, this, &ProTreeWidget::slotDoubleClickItem);
 }
 
 void ProTreeWidget::addProToTree(const QString &name, const QString &path)
@@ -62,6 +64,20 @@ void ProTreeWidget::slotItemPressed(QTreeWidgetItem *pressedItem, int column)
             menu.addAction(_action_closepro);
             menu.addAction(_action_slideshow);
             menu.exec(QCursor::pos());
+        }
+    }
+}
+
+void ProTreeWidget::slotDoubleClickItem(QTreeWidgetItem *doubleItem, int column)
+{
+    if (QGuiApplication::mouseButtons() == Qt::LeftButton) {
+        ProTreeItem* tree_doubleItem = dynamic_cast<ProTreeItem*>(doubleItem);
+        if (tree_doubleItem == nullptr)
+            return ;
+        int itemType = tree_doubleItem->type();
+        if (itemType == TreeItemPic) {
+            emit SigUpdateSelected(tree_doubleItem->getPath());
+            _selected_item = doubleItem;
         }
     }
 }
@@ -160,7 +176,7 @@ void ProTreeWidget::slotClosePro()
     bool b_remove = remove_pro_dialog.isRemoved();
     auto index_right_btn = this->indexOfTopLevelItem(_right_btn_item);
     auto *protreeitem = dynamic_cast<ProTreeItem*>(_right_btn_item);
-//    auto *selecteditem = dynamic_cast<ProTreeItem*>(_selected_item);
+    auto *selecteditem = dynamic_cast<ProTreeItem*>(_selected_item);
     auto delete_path = protreeitem->getPath();
     _set_path.remove(delete_path);
     if (b_remove) {
@@ -170,6 +186,12 @@ void ProTreeWidget::slotClosePro()
 
     if (protreeitem == _active_item) {
         _active_item = nullptr;
+    }
+
+    if (selecteditem && protreeitem == selecteditem->getRoot()) {
+        selecteditem = nullptr;
+        _selected_item = nullptr;
+        emit SigClearSelected();
     }
 
     delete this->takeTopLevelItem(index_right_btn);
@@ -223,4 +245,43 @@ void ProTreeWidget::slotOpenPro(const QString &path)
     _dialog_open_progress->setFixedWidth(PROCESS_WIDTH);
     _dialog_open_progress->setRange(0, PROCESS_WIDTH);
     _dialog_open_progress->exec();
+}
+
+void ProTreeWidget::slotPreShow()
+{
+    if (!_selected_item) {
+        return ;
+    }
+    auto* cur_item = dynamic_cast<ProTreeItem*>(_selected_item)->getPreItem();
+    if (!cur_item) {
+        return ;
+    }
+    emit SigUpdatePic(cur_item->getPath());
+    _selected_item = cur_item;
+    this->setCurrentItem(cur_item);
+}
+
+void ProTreeWidget::slotNextShow()
+{
+    if (!_selected_item) {
+        return ;
+    }
+    auto* cur_item = dynamic_cast<ProTreeItem*>(_selected_item)->getNextItem();
+    if (!cur_item) {
+        return ;
+    }
+    emit SigUpdatePic(cur_item->getPath());
+    _selected_item = cur_item;
+    this->setCurrentItem(cur_item);
+}
+
+void ProTreeWidget::keyPressEvent(QKeyEvent *e)
+{
+    if (e->key() == Qt::Key_Up) {
+        slotPreShow();
+    } else if (e->key() == Qt::Key_Down) {
+        slotNextShow();
+    } else {
+        QTreeWidget::keyPressEvent(e);
+    }
 }

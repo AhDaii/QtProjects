@@ -18,6 +18,7 @@ public:
 private:
     Ui::MainWindow *ui;
     QWidget *_protree;
+    QWidget *_picshow;
 
 private slots:
     void SlotCreatePro(bool);

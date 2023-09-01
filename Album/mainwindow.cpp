@@ -2,15 +2,20 @@
 #include "ui_mainwindow.h"
 #include <QMenu>
 #include <QAction>
+#include <QShortcut>
 #include <QFileDialog>
 #include "wizard.h"
 #include "protree.h"
+#include "picshow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->statusBar()->hide();
+//    this->showFullScreen();
+//    this->setMinimumSize(800, 600);
 
     // 创建菜单
     QMenu *menu_file = menuBar()->addMenu(tr("文件(&F)"));
@@ -34,11 +39,26 @@ MainWindow::MainWindow(QWidget *parent)
     connect(action_create_pro, &QAction::triggered, this, &MainWindow::SlotCreatePro);
     connect(action_open_pro, &QAction::triggered, this, &MainWindow::SlotOpenPro);
 
+    // 左侧区域
     _protree = new ProTree();
-    ui->proLayout->addWidget(_protree, 0);
+    ui->proLayout->addWidget(_protree);
     QTreeWidget* tree_widget = dynamic_cast<ProTree*>(_protree)->getTreeWidget();
     auto* pro_tree_widget = dynamic_cast<ProTreeWidget*>(tree_widget);
     connect(this, &MainWindow::SigOpenPro, pro_tree_widget, &ProTreeWidget::slotOpenPro);
+
+    // 右侧区域
+    _picshow = new PicShow();
+    ui->picLayout->addWidget(_picshow);
+    auto* pro_pic_show = dynamic_cast<PicShow*>(_picshow);
+    connect(pro_tree_widget, &ProTreeWidget::SigUpdateSelected, pro_pic_show, &PicShow::slotSelectItem);
+
+    // 图片切换
+    connect(pro_pic_show, &PicShow::SigPreClicked, pro_tree_widget, &ProTreeWidget::slotPreShow);
+    connect(pro_pic_show, &PicShow::SigNextClicked, pro_tree_widget, &ProTreeWidget::slotNextShow);
+    connect(pro_tree_widget, &ProTreeWidget::SigUpdatePic, pro_pic_show, &PicShow::slotUpdatePic);
+
+    // 项目关闭时清空图片区域
+    connect(pro_tree_widget, &ProTreeWidget::SigClearSelected, pro_pic_show, &PicShow::slotDeleteItem);
 }
 
 MainWindow::~MainWindow()

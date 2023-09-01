@@ -3,6 +3,7 @@
 
 #include "protreethread.h"
 #include <QTreeWidget>
+#include <QKeyEvent>
 #include <QSet>
 #include <QAction>
 #include <QProgressDialog>
@@ -31,6 +32,7 @@ private:
     
 private slots:
     void slotItemPressed(QTreeWidgetItem *item, int column);
+    void slotDoubleClickItem(QTreeWidgetItem* doubleitem, int column);
     void slotImport();
     void slotUpdateProgress(int count);
     void slotFinishProgress();
@@ -43,10 +45,19 @@ private slots:
     void slotCancelOpenProgress();
 public slots:
     void slotOpenPro(const QString& path);
+    void slotPreShow();
+    void slotNextShow();
+protected:
+    void keyPressEvent(QKeyEvent* e) override;
 
 signals:
     void SigCancelProgress();
     void SigCancelOpenProgress();
+    void SigUpdateSelected(const QString& path);
+    void SigUpdatePic(const QString& path);
+    void SigKeyUp();
+    void SigKeyDown();
+    void SigClearSelected();
 };
 
 #endif // PROTREEWIDGET_H
