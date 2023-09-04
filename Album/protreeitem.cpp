@@ -1,4 +1,5 @@
 #include "protreeitem.h"
+#include "const.h"
 
 
 ProTreeItem::ProTreeItem(QTreeWidget *view, const QString &name, const QString &path, int type):
@@ -45,10 +46,54 @@ ProTreeItem *ProTreeItem::getNextItem()
 
 ProTreeItem *ProTreeItem::getLastPicChild()
 {
-    
+    if (this->type() == TreeItemPic) {
+        return nullptr;
+    }
+    auto child_count = this->childCount();
+    if (child_count == 0) {
+        return nullptr;
+    }
+
+    for (int i = child_count - 1; i >= 0; -- i) {
+        auto* last_child = this->child(i);
+        auto* last_tree_item = dynamic_cast<ProTreeItem*>(last_child);
+        int item_type = last_tree_item->type();
+        if (item_type == TreeItemPic) {
+            return last_tree_item;
+        }
+        last_child = last_tree_item->getLastPicChild();
+        if (!last_child) {
+            continue;
+        }
+        last_tree_item = dynamic_cast<ProTreeItem*>(last_child);
+        return last_tree_item;
+    }
+    return nullptr;
 }
 
 ProTreeItem *ProTreeItem::getFirstPicChild()
 {
-    
+    if (this->type() == TreeItemPic) {
+        return nullptr;
+    }
+    auto child_count = this->childCount();
+    if (child_count == 0) {
+        return nullptr;
+    }
+
+    for (int i = 0; i < child_count; ++ i) {
+        auto* first_child = this->child(i);
+        auto* first_tree_item = dynamic_cast<ProTreeItem*>(first_child);
+        int item_type = first_tree_item->type();
+        if (item_type == TreeItemPic) {
+            return first_tree_item;
+        }
+        first_child = first_tree_item->getFirstPicChild();
+        if (!first_child) {
+            continue;
+        }
+        first_tree_item = dynamic_cast<ProTreeItem*>(first_child);
+        return first_tree_item;
+    }
+    return nullptr;
 }

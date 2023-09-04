@@ -7,6 +7,15 @@ enum TreeItemType {
     TreeItemPic = 3, // 项目图片
 };
 
+enum PicBtnState {
+    Normal = 1,
+    Hover = 2,
+    Pressed = 3,
+    Normal_2 = 4,
+    Hover_2 = 5,
+    Pressed_2 = 6
+};
+
 const int PROCESS_WIDTH = 300;
 const int PROCESS_MAX = 300;
 

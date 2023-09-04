@@ -91,3 +91,39 @@ PicShow {
 #previousBtn, #nextBtn {
     border: 0px;
 }
+
+SlideShowDialog {
+    color: rgb(231, 231, 231);
+    background-color: rgb(46, 47, 48);
+}
+
+#slidePreBtn, #slideNextBtn, #playBtn, #closeBtn {
+    border: 0px;
+}
+
+#preListWidget {
+    color: rgb(231, 231, 231);
+    background-color: rgb(46, 47, 48);
+    border: 0px;
+}
+
+#preListWidget::item:hover {
+    background: rgb(38, 95, 153);
+}
+
+#preListWidget::item:selected {
+    background: rgb(38, 95, 153);
+    border: 2px solid #FFFFFF;
+}
+
+#preListWidget::item:selected:active {
+    border: 2px solid #FFFFFF;
+}
+
+#slidePreWid {
+    margin-left: 10px;
+}
+
+#slideNextWid {
+    margin-right: 10px;
+}

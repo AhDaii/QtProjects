@@ -11,10 +11,11 @@
 #include <QTreeWidgetItem>
 #include <QTreeWidget>
 #include <QDebug>
+#include <slideshowdialog.h>
 
 ProTreeWidget::ProTreeWidget(QWidget *parent):
     QTreeWidget(parent), _right_btn_item(nullptr), _active_item(nullptr), _dialog_progress(nullptr), _selected_item(nullptr),
-    _thread_import_pro(nullptr), _thread_open_pro(nullptr), _dialog_open_progress(nullptr)
+    _thread_import_pro(nullptr), _thread_open_pro(nullptr), _dialog_open_progress(nullptr), _slide_show_dialog(nullptr)
 {
     qRegisterMetaType<QVector<int> >("QVector<int>");
     this->header()->hide();
@@ -26,6 +27,7 @@ ProTreeWidget::ProTreeWidget(QWidget *parent):
     connect(_action_import, &QAction::triggered, this, &ProTreeWidget::slotImport);
     connect(_action_setstart, &QAction::triggered, this, &ProTreeWidget::slotSetActive);
     connect(_action_closepro, &QAction::triggered, this, &ProTreeWidget::slotClosePro);
+    connect(_action_slideshow, &QAction::triggered, this, &ProTreeWidget::slotSlideShow);
 
     connect(this, &ProTreeWidget::itemDoubleClicked, this, &ProTreeWidget::slotDoubleClickItem);
 }
@@ -196,6 +198,23 @@ void ProTreeWidget::slotClosePro()
 
     delete this->takeTopLevelItem(index_right_btn);
     _right_btn_item = nullptr;
+}
+
+void ProTreeWidget::slotSlideShow()
+{
+    if (!_right_btn_item)
+        return ;
+    auto* right_pro_item = dynamic_cast<ProTreeItem*>(_right_btn_item);
+    auto* last_child_item = right_pro_item->getLastPicChild();
+    if (!last_child_item)
+        return ;
+    auto* first_child_item = right_pro_item->getFirstPicChild();
+    if (!first_child_item)
+        return ;
+
+    _slide_show_dialog = std::make_shared<SlideShowDialog>(this, first_child_item, last_child_item);
+    _slide_show_dialog->setModal(true);
+    _slide_show_dialog->showMaximized();
 }
 
 void ProTreeWidget::slotUpdateOpenProgress(int count)
