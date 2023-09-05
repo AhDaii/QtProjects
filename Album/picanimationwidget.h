@@ -17,6 +17,13 @@ public:
     void start();
     void stop();
 
+    void slidePre();
+    void slideNext();
+
+public slots:
+    void slotUpSelectShow(QString path);
+    void slotStartOrStop();
+
 protected:
     virtual void paintEvent(QPaintEvent* e) override;
 
@@ -28,8 +35,15 @@ private:
     QTreeWidgetItem *_cur_item;
     QMap<QString, QTreeWidgetItem*> _map_items;
 
-signals:
+    void upSelectPixmap(QTreeWidgetItem* item);
 
+signals:
+    void SigUpPreList(QTreeWidgetItem*);
+    void SigSelectItem(QTreeWidgetItem*);
+    void SigStart();
+    void SigStop();
+    void SigStartMusic();
+    void SigStopMusic();
 
 private slots:
     void timeOut();

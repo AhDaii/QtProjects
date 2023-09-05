@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,6 +17,8 @@ SOURCES += \
     picbutton.cpp \
     picshow.cpp \
     picstatebtn.cpp \
+    prelistitem.cpp \
+    prelistwidget.cpp \
     prosetpage.cpp \
     protree.cpp \
     protreeitem.cpp \
@@ -35,6 +37,8 @@ HEADERS += \
     picbutton.h \
     picshow.h \
     picstatebtn.h \
+    prelistitem.h \
+    prelistwidget.h \
     prosetpage.h \
     protree.h \
     protreeitem.h \

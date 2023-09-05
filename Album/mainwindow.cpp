@@ -59,6 +59,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 项目关闭时清空图片区域
     connect(pro_tree_widget, &ProTreeWidget::SigClearSelected, pro_pic_show, &PicShow::slotDeleteItem);
+
+
+    // 音乐播放
+    connect(act_music, &QAction::triggered, pro_tree_widget, &ProTreeWidget::slotSetMusic);
 }
 
 MainWindow::~MainWindow()

@@ -7,6 +7,8 @@
 #include <QSet>
 #include <QAction>
 #include <QProgressDialog>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 #include "OpenTreeThread.h"
 
 class SlideShowDialog;
@@ -32,6 +34,8 @@ private:
     std::shared_ptr<ProTreeThread> _thread_import_pro;
     std::shared_ptr<OpenTreeThread> _thread_open_pro;
     std::shared_ptr<SlideShowDialog> _slide_show_dialog;
+    QMediaPlayer* _player;
+    QMediaPlaylist* _playlist;
 
     
 private slots:
@@ -52,6 +56,9 @@ public slots:
     void slotOpenPro(const QString& path);
     void slotPreShow();
     void slotNextShow();
+    void slotSetMusic();
+    void slotStartMusic();
+    void slotStopMusic();
 protected:
     void keyPressEvent(QKeyEvent* e) override;
 
